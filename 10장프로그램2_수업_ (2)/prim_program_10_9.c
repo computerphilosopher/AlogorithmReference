@@ -18,7 +18,7 @@ int weight[MAX_VERTICES][MAX_VERTICES]=
 };
 
 int selected[MAX_VERTICES];
-int dist[MAX_VERTICES]; // 현재까지 알려진 최단거리들을 저장한 배열
+int dist[MAX_VERTICES];
 
 /* 아직 안 뽑힌 점 중에 가장 가중치가 작은 정점을 뽑는 함수 */
 
@@ -34,15 +34,11 @@ int get_min_vertex(int n)
 		}
 	}
 
-	/* 안 뽑힌 정점중에, 기준점보다 짧은 거리를 가진 정점이 있는지 검사*/
-
 	for(i=0;i<n;i++){
 		if(!selected[i] && (dist[i]<dist[v])){
 			v=i;
 		}
 	}
-
-	/* 최단거리 정점 리턴*/
 	return v;
 }
 
@@ -54,27 +50,17 @@ void prim(int s,int n)
 		dist[u]=INF;
 	}
 	dist[s]=0;
-
-	
-	for(u=0;u<n;u++){
+	for(u=0;u<n;u++)
 		selected[u]=FALSE;
-	}
-
 	for(i=0;i<n;i++){
-		
 		u=get_min_vertex(n);
 		selected[u]=TRUE;
-		
-		if(dist[u]==INF){
-			return;
-		}
-
+		if(dist[u]==INF) return;
 		printf("%d ",u);
-		
 		for(v=0;v<n;v++)
-			if(weight[u][v]!=INF) // u, v가 연결되어 있고
-				if(!selected[v] && weight[u][v]<dist[v]) //현재 u~v가 최단 거리가 아니면
-					dist[v]=weight[u][v]; // 최단거리 업데이트
+			if(weight[u][v]!=INF)
+				if(!selected[v] && weight[u][v]<dist[v])
+					dist[v]=weight[u][v];
 	}
 }
 
